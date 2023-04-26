@@ -5,13 +5,14 @@
 import { useState } from "react";
 
 export default function NewListing() {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  // type e correctly
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSuccess(false);
+
+    const target = e.target as HTMLFormElement;
 
     const res = await fetch("/api/listing", {
       method: "POST",
@@ -19,18 +20,20 @@ export default function NewListing() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title,
-        price,
-        image,
-        description,
+        title: (target.title as unknown as HTMLInputElement).value,
+        price: (target.price as HTMLInputElement).value,
+        image: (target.image as HTMLInputElement).value,
+        description: (target.description as HTMLInputElement).value,
       }),
     });
 
     const json = await res.json();
+    console.log(json);
 
     if (!res.ok) throw Error(json.message);
 
     alert("Success!");
+    setSuccess(true);
   };
 
   return (
@@ -48,7 +51,7 @@ export default function NewListing() {
               type="text"
               name="title"
               id="title"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
@@ -65,7 +68,9 @@ export default function NewListing() {
               type="number"
               name="price"
               id="price"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              // convert to number
+              // onChange={(e) => setPrice(parseFloat(e.target.value))}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
@@ -82,7 +87,7 @@ export default function NewListing() {
             type="text"
             name="image"
             id="image"
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -98,7 +103,7 @@ export default function NewListing() {
             id="description"
             name="description"
             rows={3}
-            className="block w-full rounded-md border-0 py-1.5 text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             defaultValue={""}
           />
         </div>
@@ -107,12 +112,19 @@ export default function NewListing() {
         </p>
       </div>
 
-      <button
-        type="submit"
-        className="rounded-md float-right bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        Create new Listing
-      </button>
+      <div className="flex flex-col md:flex-row justify-between ">
+        {success && (
+          <p className="text-green-500 mb-4 md:mb-0 text-sm font-semibold">
+            Listing created successfully!
+          </p>
+        )}
+        <button
+          type="submit"
+          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Create new Listing
+        </button>
+      </div>
     </form>
   );
 }

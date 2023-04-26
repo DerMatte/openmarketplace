@@ -15,13 +15,15 @@ export default async function Home() {
           {allListings.map((l) => (
             <a key={l.id} href={`/l/${l.id}`} className="group">
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                <Image
-                  src={l.image}
-                  width={800}
-                  height={800}
-                  alt={l.title}
-                  className="h-full w-full object-cover object-center group-hover:opacity-75"
-                />
+                {l.image && (
+                  <Image
+                    src={l.image}
+                    width={800}
+                    height={800}
+                    alt={l.title}
+                    className="h-full w-full object-cover object-center group-hover:opacity-75"
+                  />
+                )}
               </div>
               <h3 className="mt-4 text-sm text-gray-300">{l.title}</h3>
               <p className="mt-1 text-lg font-medium text-gray-100">
