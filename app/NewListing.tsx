@@ -42,7 +42,7 @@ export default function NewListing() {
         <div className="sm:col-span-3 mb-4">
           <label
             htmlFor="title"
-            className="block text-sm font-medium leading-6 text-gray-100"
+            className="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-800"
           >
             Listing title
           </label>
@@ -59,7 +59,7 @@ export default function NewListing() {
         <div className="sm:col-span-3">
           <label
             htmlFor="price"
-            className="block text-sm font-medium leading-6 text-gray-100"
+            className="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-800"
           >
             Price
           </label>
@@ -78,7 +78,7 @@ export default function NewListing() {
       <div className="sm:col-span-3 mb-2">
         <label
           htmlFor="image"
-          className="block text-sm font-medium leading-6 text-gray-100"
+          className="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-800"
         >
           Image Link
         </label>
@@ -94,7 +94,7 @@ export default function NewListing() {
       <div className="col-span-full">
         <label
           htmlFor="description"
-          className="block text-sm font-medium leading-6 text-gray-100"
+          className="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-800"
         >
           Description
         </label>
@@ -107,7 +107,7 @@ export default function NewListing() {
             defaultValue={""}
           />
         </div>
-        <p className="mt-3 text-sm leading-6 text-gray-300 mb-8">
+        <p className="mt-3 text-sm leading-6 dark:text-gray-300 text-gray-800 mb-8">
           Write a few sentences about your item.
         </p>
       </div>
