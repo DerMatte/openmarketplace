@@ -4,9 +4,17 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import NewListing from "./NewListing";
 
-import { SignIn, SignedOut } from "@clerk/nextjs/app-beta";
+import { SignIn, SignedIn, SignedOut, auth } from "@clerk/nextjs/app-beta";
 import { currentUser } from "@clerk/nextjs/app-beta";
 import type { User } from "@clerk/nextjs/dist/api";
+
+// import {
+//   ClerkProvider,
+//   // SignedIn,
+//   // SignedOut,
+//   SignInButton,
+//   UserButton,
+// } from "@clerk/nextjs";
 
 export default async function Home() {
   const allListings = await prisma.listing.findMany({});
@@ -36,17 +44,22 @@ export default async function Home() {
           </Link>
         ))}
       </div>
-      {user ? (
-        <>
-          <NewListing />
-        </>
-      ) : (
-        <SignIn />
-      )}
-      <div className="py-8">
+      <SignedIn>
+        {/* Mount the UserButton component */}
+        {/* <NewListing user={user} /> */}
+        <NewListing />
+      </SignedIn>
+      <SignedOut>
+        {/* Signed out users get sign in button */}
+
+        <Link href="/sign-in" className="">
+          Sign in
+        </Link>
+      </SignedOut>
+      {/* <div className="py-8">
         <p className="text-xl text-gray-800">Auth Data:</p>
         <pre>{JSON.stringify(user, null, 2)}</pre>
-      </div>
+      </div> */}
     </main>
   );
 }

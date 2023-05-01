@@ -1,4 +1,5 @@
 "use client";
+import type { User } from "@clerk/nextjs/dist/api";
 
 // create a new listing using a form
 
@@ -24,6 +25,7 @@ export default function NewListing() {
         price: (target.price as HTMLInputElement).value,
         image: (target.image as HTMLInputElement).value,
         description: (target.description as HTMLInputElement).value,
+        // userId: user?.id,
       }),
     });
 

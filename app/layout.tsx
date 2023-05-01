@@ -8,10 +8,12 @@ import "./globals.css";
 import localFont from "next/font/local";
 import clsx from "clsx";
 import { ClerkProvider } from "@clerk/nextjs/app-beta";
+import Navbar from "./Navbar";
 
 const inter = localFont({
   src: "../public/fonts/Inter.var.woff2",
   display: "swap",
+  variable: "--inter-var",
 });
 
 export const metadata = {
@@ -33,7 +35,11 @@ export default function RootLayout({
             "bg-gray-50 text-gray-900 dark:text-grey-50 dark:bg-grey-800"
           )}
         >
+          <Navbar />
           {children}
+          <footer className="bg-gray-800 text-gray-50 dark:bg-gray-900 dark:text-gray-200 px-16 py-8">
+            <span>OpenMarketplace is an open source project</span>
+          </footer>
         </body>
       </html>
     </ClerkProvider>
